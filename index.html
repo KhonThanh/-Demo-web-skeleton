@@ -1,6 +1,5 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +9,7 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet">
     <link rel="preload" as="image" href="./img/banner/banner-home.webp">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" href="../css/style.min.css">
     <!-- <link rel="stylesheet" href="./css/base.css">
@@ -22,19 +22,22 @@
 <body>
     <header class="container-f " data-include="./component/header.html"></header>
     <main class="container-f flex flex-col center-hor pos-rel">
-        <section class="container-f slide-container">
-            <div>
-                <img src="./img/banner/banner-home.webp" alt="Banner 1">
+        <section class="container-f swiper slide-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="./img/banner/banner-home.webp" alt="Banner 1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="./img/banner/banner-home.webp" alt="Banner 2">
+                </div>
+                <div class="swiper-slide">
+                    <img src="./img/banner/banner-home.webp" alt="Banner 3">
+                </div>
+                <div class="swiper-slide">
+                    <img src="./img/banner/banner-home.webp" alt="Banner 4">
+                </div>
             </div>
-            <div>
-                <img src="./img/banner/banner-home.webp" alt="Banner 2">
-            </div>
-            <div>
-                <img src="./img/banner/banner-home.webp" alt="Banner 3">
-            </div>
-            <div>
-                <img src="./img/banner/banner-home.webp" alt="Banner 4">
-            </div>
+            <div class="swiper-pagination custom-dots"></div>
         </section>
         <section class="intro-section container-f bg-white-second container-padding flex center-hor">
             <div class="container-m flex flex-col center-ver text-center gap-20">
@@ -51,8 +54,9 @@
         <section class="services-section container-f container-padding flex center-hor">
             <div class="container-l flex flex-col gap-20">
                 <h2 class="section-title text-center bold uppercase">Dịch vụ chuyên nghiệp</h2>
-                <div class="service-list flex flex-wrap gap-20 pos-rel">
-                    <article class="service-item">
+                <div class="service-list swiper flex flex-wrap gap-20 pos-rel">
+                    <div class="swiper-wrapper">
+                        <article class="service-item swiper-slide">
                         <div class="service-item__content gap-10 custom-item bg-white flex flex-col pos-rel">
                             <img src="./img/service/s1.jpg" alt="Dịch vụ kế toán" class="service-img">
                             <div class="service-content flex flex-col gap-10 jus-sb">
@@ -72,7 +76,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="service-item">
+                    <article class="service-item swiper-slide">
                         <div class="service-item__content gap-10 custom-item bg-white flex flex-col pos-rel">
                             <img src="./img/service/s2.jpg" alt="Dịch vụ thuế" class="service-img">
                             <div class="service-content flex flex-col gap-10 jus-sb">
@@ -94,7 +98,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="service-item">
+                    <article class="service-item swiper-slide">
                         <div class="service-item__content gap-10 custom-item bg-white flex flex-col pos-rel">
                             <img src="./img/service/s3.jpg" alt="Tư vấn quản lý" class="service-img">
                             <div class="service-content flex flex-col gap-10 jus-sb">
@@ -113,7 +117,7 @@
                             </div>
                         </div>
                     </article>
-                    <article class="service-item">
+                    <article class="service-item swiper-slide">
                         <div class="service-item__content gap-10 custom-item bg-white flex flex-col">
                             <img src="./img/service/s4.jpg" alt="Tư vấn đầu tư" class="service-img">
                             <div class="service-content flex flex-col gap-10 jus-sb">
@@ -134,6 +138,7 @@
                             </div>
                         </div>
                     </article>
+                    </div>
                 </div>
             </div>
         </section>
@@ -339,6 +344,7 @@
     </section>
     <script defer type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script defer type="text/javascript" src="./js/frontend.js"></script>
     <script defer type="text/javascript" src="./js/gulpfile.js"></script>
 </body>

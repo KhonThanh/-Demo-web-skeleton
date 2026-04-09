@@ -25,7 +25,6 @@ main {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  caret-color: transparent;
 }
 
 img {
@@ -89,10 +88,6 @@ a {
   text-decoration: none;
   color: var(--black-color);
   cursor: pointer;
-}
-
-*:not(input):not(textarea) {
-  caret-color: transparent;
 }
 
 p {

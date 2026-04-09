@@ -419,6 +419,68 @@ function generateHeadingLinks({
   }
 }
 
+// 🧩 2️⃣ Hàm dùng chung cho tất cả Swiper
+function initSwiperSlider({
+  mainSelector,
+  minSlides = 0, // Số lượng slide tối thiểu cần có để loop mượt mà (nếu loop: true)
+  autoplay = false, // false, true, hoặc object { delay: 2500, disableOnInteraction: false }
+  spaceBetween = 0, // Khoảng cách giữa các slide
+  slidesPerView = 1, // Số lượng slide hiển thị trên mỗi view
+  loop = false, // Bật/tắt chế độ lặp vô hạn
+  navigation = { // Cấu hình nút điều hướng
+    nextEl: null, // Selector của nút next
+    prevEl: null  // Selector của nút prev
+  },
+  pagination = { // Cấu hình phân trang (dots)
+    el: null,     // Selector của container chứa dots
+    clickable: true // Cho phép click vào dots để chuyển slide
+  },
+  breakpoints = null, // Cấu hình responsive
+  ...extraOptions // Các tùy chọn Swiper khác
+}) {
+  const swiperContainer = document.querySelector(mainSelector);
+  if (!swiperContainer) {
+    console.warn(`Swiper container not found for selector: ${mainSelector}`);
+    return;
+  }
+
+  // Nếu loop được bật và minSlides được chỉ định, đảm bảo đủ slide để vòng lặp mượt mà
+  if (loop && minSlides > 0) {
+    const wrapper = swiperContainer.querySelector('.swiper-wrapper');
+    if (wrapper) {
+      const slides = Array.from(wrapper.children);
+      let currentSlideCount = slides.length;
+      // Swiper cần ít nhất slidesPerView * 2 (hoặc hơn) để loop mượt mà khi slidesPerView > 1
+      // Nếu slidesPerView = 1, cần ít nhất 2-3 slide
+      const requiredForLoop = slidesPerView > 1 ? slidesPerView * 2 : 3;
+      const actualMin = Math.max(minSlides, requiredForLoop);
+
+      if (currentSlideCount < actualMin) {
+        for (let i = 0; i < actualMin - currentSlideCount; i++) {
+          wrapper.appendChild(slides[i % currentSlideCount].cloneNode(true));
+        }
+      }
+    }
+  }
+
+  const swiperOptions = {
+    slidesPerView: slidesPerView,
+    spaceBetween: spaceBetween,
+    loop: loop,
+    autoplay: autoplay ? {
+      delay: typeof autoplay === 'number' ? autoplay : 2500,
+      disableOnInteraction: false,
+      ...(typeof autoplay === 'object' ? autoplay : {})
+    } : false,
+    navigation: navigation.nextEl || navigation.prevEl ? navigation : false,
+    pagination: pagination.el ? pagination : false,
+    breakpoints: breakpoints,
+    ...extraOptions
+  };
+
+  new Swiper(swiperContainer, swiperOptions);
+}
+
 // js roll to top
 function initScrollToTop(btnId = "btnToTop", showOffset = 1000) {
   const scrollBtn = document.getElementById(btnId);
@@ -521,56 +583,26 @@ document.addEventListener("DOMContentLoaded", () => {
       contentSelector: "#intro-content",
       linkSelector: ".menu-shortcut__container .intro-banner__shortcut"
     });
-    // 🟢 Slide banner chính
-    initSlickSlider({
+    // 🟢 Slide banner chính (chuyển sang Swiper)
+    initSwiperSlider({
       mainSelector: '.slide-container',
-      minSlides: 3,
-      mainOptions: {
-        infinite: true,
-        autoplay: true,
-        dots: true,
-        arrows: false,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        fade: false,
-        appendDots: $('.custom-dots')
-      }
+      minSlides: 3, // Đảm bảo có ít nhất 3 slide để loop mượt mà
+      autoplay: { delay: 3000, disableOnInteraction: false }, // Tự động chạy sau 3 giây
+      loop: true, // Bật vòng lặp vô hạn
+      slidesPerView: 1, // Hiển thị 1 slide
+      spaceBetween: 0, // Không có khoảng cách
+      pagination: {
+        el: '.swiper-pagination.custom-dots', // Selector cho dots
+        clickable: true,
+      },
     });
-    initSlickSlider({
+    initSwiperSlider({
       mainSelector: '.service-list',
       minSlides: 8,
-      mainOptions: {
-        infinite: true,
-        autoplay: false,
-        dots: false,
-        arrows: true,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        fade: false,
-        responsive: [
-          {
-            breakpoint: 1025,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 1,
-            }
-          },
-          {
-            breakpoint: 769,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
-            }
-          },
-          {
-            breakpoint: 481,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-            }
-          },
-        ]
-      }
+      autoplay: false,
+      loop: true,
+      slidesPerView: 4,
+      spaceBetween: 20,
     });
     initSlickSlider({
       mainSelector: '.news-list',

@@ -967,3 +967,39 @@ footer {
     max-width: 500px;
     margin-bottom: 20px;
 }
+
+/* Swiper Custom Dots */
+.swiper-pagination.custom-dots {
+    position: absolute;
+    bottom: 20px; /* Điều chỉnh vị trí theo ý muốn */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.swiper-pagination-bullet {
+    background: var(--white-color); /* Màu mặc định của dot */
+    opacity: 0.7;
+}
+.swiper-pagination-bullet-active {
+    background: var(--primary-color); /* Màu của dot khi active */
+    opacity: 1;
+}
+
+/* Swiper Custom Dots */
+.swiper-pagination.custom-dots {
+    position: absolute;
+    bottom: 20px; /* Điều chỉnh vị trí theo ý muốn */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.swiper-pagination-bullet {
+    background: var(--white-color); /* Màu mặc định của dot */
+    opacity: 0.7;
+}
+.swiper-pagination-bullet-active {
+    background: var(--primary-color); /* Màu của dot khi active */
+    opacity: 1;
+}
