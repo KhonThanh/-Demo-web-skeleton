@@ -754,11 +754,6 @@
     content: "❯";
 }
 
-.partner-item,
-.service-item {
-    margin: 0px 10px;
-}
-
 .service-item__content {
     padding: 10px;
     transition: all 0.6s ease;
@@ -775,6 +770,8 @@
 
 .service-img {
     aspect-ratio: 39 / 22;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
 .service-item__content:hover {
@@ -971,35 +968,43 @@ footer {
 /* Swiper Custom Dots */
 .swiper-pagination.custom-dots {
     position: absolute;
-    bottom: 20px; /* Điều chỉnh vị trí theo ý muốn */
+    bottom: 20px;
+    /* Điều chỉnh vị trí theo ý muốn */
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
 }
 
 .swiper-pagination-bullet {
-    background: var(--white-color); /* Màu mặc định của dot */
+    background: var(--white-color);
+    /* Màu mặc định của dot */
     opacity: 0.7;
 }
+
 .swiper-pagination-bullet-active {
-    background: var(--primary-color); /* Màu của dot khi active */
+    background: var(--primary-color);
+    /* Màu của dot khi active */
     opacity: 1;
 }
 
 /* Swiper Custom Dots */
 .swiper-pagination.custom-dots {
     position: absolute;
-    bottom: 20px; /* Điều chỉnh vị trí theo ý muốn */
+    bottom: 20px;
+    /* Điều chỉnh vị trí theo ý muốn */
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
 }
 
 .swiper-pagination-bullet {
-    background: var(--white-color); /* Màu mặc định của dot */
+    background: var(--white-color);
+    /* Màu mặc định của dot */
     opacity: 0.7;
 }
+
 .swiper-pagination-bullet-active {
-    background: var(--primary-color); /* Màu của dot khi active */
+    background: var(--primary-color);
+    /* Màu của dot khi active */
     opacity: 1;
 }
