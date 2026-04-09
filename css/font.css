@@ -1,0 +1,89 @@
+@font-face {
+  font-family: 'Oswald';
+  src: url('../../font/Oswald-Bold.ttf') format('woff2'),
+       local('Oswald');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Oswald';
+  src: url('../../font/Oswald-ExtraLight.ttf') format('woff2'),
+       local('Oswald');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Oswald';
+  src: url('../../font/Oswald-Light.ttf') format('woff2'),
+       local('Oswald');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Oswald';
+  src: url('../../font/Oswald-Medium.ttf') format('woff2'),
+       local('Oswald');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Oswald';
+  src: url('../../font/Oswald-Regular.ttf') format('woff2'),
+       local('Oswald');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Oswald';
+  src: url('../../font/Oswald-SemiBold.ttf') format('woff2'),
+       local('Oswald');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Oswald';
+  src: url('../../font/Oswald-VariableFont_wght.ttf') format('woff2'),
+       local('Oswald');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), local('Inter-SemiBold'),
+       url('../../font/Inter_18pt-SemiBold.ttf') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), local('Inter-Italic'),
+       url('../../font/Inter_18pt-Italic.ttf') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), local('Inter-Regular'),
+       url('../../font/Inter_18pt-Regular.ttf') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Oooh Baby';
+  src: url('../../font/OoohBaby-Regular.ttf') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+

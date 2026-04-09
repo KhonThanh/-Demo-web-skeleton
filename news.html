@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon | Tin tức</title>
+    <link rel="icon" type="image/png" href="./img/logo/logo-favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" href="../css/style.min.css">
+    <!-- <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+    <link rel="stylesheet" href="./css/utility.css"> -->
+</head>
+
+<body>
+    <header class="container-f" data-include="./component/header.html"></header>
+    <main class="container-f flex flex-col center-hor">
+        <section class="flex bg-gray container-f">
+            <div class=" container-l nav-bar__container">
+                <a href="javascript:void(0)" class="nav-bar__item">Trang chủ</a>
+                <a href="javascript:void(0)" class="nav-bar__item">Tin tức</a>
+            </div>
+        </section>
+        <section class="top-news-section container-f container-padding flex center-hor">
+            <div class="container-l flex gap-30 news-top-wrapper">
+
+                <div class="news-top__left flex gap-20">
+                    <div class="news-top__highlight">
+                        <article class="news-card-big pos-rel flex flex-col gap-20">
+                            <img src="./img/news/news-large.jpg" alt="Highlight" class="img-content news-card-big__img">
+                            <h2 class="news-card-big__title text-header-size bold">
+                                <a href="javascript:void(0)" class="stretched-link">Chính sách Thuế mới nhất 2026 dành cho doanh nghiệp
+                                    FDI</a>
+                            </h2>
+                            <p class="news-card-big__desc text-desc color-gray">Những thay đổi quan trọng về ưu đãi Thuế
+                                thu nhập doanh nghiệp, thuế VAT và các lệ phí dành cho nhà đầu tư tại Việt Nam.</p>
+                        </article>
+                    </div>
+                </div>
+
+                <aside class="news-top__right flex flex-col gap-20">
+                    <article class="news-side-item pos-rel custom-item-flat flex gap-10 center-ver">
+                        <div class=" flex flex-col gap-10 news-side-item__content">
+                            <h4 class="news-side-item__title flex-1 bold">
+                                <a href="javascript:void(0)" class="stretched-link">Chính sách Thuế mới nhất 2026 d...</a>
+                            </h4>
+                            <span class="news-side-item__decs">23-3-2026</span>
+                        </div>
+                        <img src="./img/news/side-news-1.jpg" alt="Thumb" class="img-content news-side-item__img">
+                    </article>
+                     <article class="news-side-item pos-rel custom-item-flat flex gap-10 center-ver">
+                        <div class=" flex flex-col gap-10 news-side-item__content">
+                            <h4 class="news-side-item__title flex-1 bold">
+                                <a href="javascript:void(0)" class="stretched-link">Chính sách Thuế mới nhất 2026 d...</a>
+                            </h4>
+                            <span class="news-side-item__decs">23-3-2026</span>
+                        </div>
+                        <img src="./img/news/side-news-2.jpg" alt="Thumb" class="img-content news-side-item__img">
+                    </article>
+                     <article class="news-side-item pos-rel custom-item-flat flex gap-10 center-ver">
+                        <div class=" flex flex-col gap-10 news-side-item__content">
+                            <h4 class="news-side-item__title flex-1 bold">
+                                <a href="javascript:void(0)" class="stretched-link">Chính sách Thuế mới nhất 2026 d...</a>
+                            </h4>
+                            <span class="news-side-item__decs">23-3-2026</span>
+                        </div>
+                        <img src="./img/news/side-news-3.jpg" alt="Thumb" class="img-content news-side-item__img">
+                    </article>
+                     <article class="news-side-item pos-rel custom-item-flat flex gap-10 center-ver">
+                        <div class=" flex flex-col gap-10 news-side-item__content">
+                            <h4 class="news-side-item__title flex-1 bold">
+                                <a href="javascript:void(0)" class="stretched-link">Chính sách Thuế mới nhất 2026 d...</a>
+                            </h4>
+                            <span class="news-side-item__decs">23-3-2026</span>
+                        </div>
+                        <img src="./img/news/side-news-4.jpg" alt="Thumb" class="img-content news-side-item__img">
+                    </article>
+                     <article class="news-side-item pos-rel custom-item-flat flex gap-10 center-ver">
+                        <div class=" flex flex-col gap-10 news-side-item__content">
+                            <h4 class="news-side-item__title flex-1 bold">
+                                <a href="javascript:void(0)" class="stretched-link">Chính sách Thuế mới nhất 2026 d...</a>
+                            </h4>
+                            <span class="news-side-item__decs">23-3-2026</span>
+                        </div>
+                        <img src="./img/news/side-news-5.jpg" alt="Thumb" class="img-content news-side-item__img">
+                    </article>
+                </aside>
+            </div>
+        </section>
+
+        <section class="category-news-section container-f container-padding flex center-hor bg-white-second">
+            <div class="container-l flex flex-col gap-30">
+
+                <div class="category-header flex jus-sb center-ver">
+                    <h2 class="bold uppercase text-header-size color-primary">Tin chuyên ngành</h2>
+                    <a href="./news-cat.html" class="text-desc italic color-gray">Xem thêm →</a>
+                </div>
+
+                <div class="category-list flex flex-wrap gap-20 center-hor">
+                    <article class="cursor-pointer news-container__item col-4 flex flex-col gap-10 pos-rel ">
+                        <img src="./img/news/news-1.jpg" alt="Chính sách thuế mới 1" class="news-item__img img-content">
+                        <h3 class="news-item__title bold"><a href="./news-detail.html"
+                                class="stretched-link text-color-black">Chính sách Thuế mới nhất 2026 dành cho
+                                doanh nghiệp FDI</a></h3>
+                        <p class="news-item__date text-desc">23-3-2026</p>
+                        <div class="news-item__footer flex end-hor"><span class="news-item__link text-color-gray">Xem
+                                thêm →</span></div>
+                    </article>
+
+                    <article class="cursor-pointer news-container__item col-4 flex flex-col gap-10 pos-rel ">
+                        <img src="./img/news/news-2.jpg" alt="Chính sách thuế mới 2" class="news-item__img img-content">
+                        <h3 class="news-item__title bold"><a href="./news-detail.html"
+                                class="stretched-link text-color-black">Chính sách Thuế mới nhất 2026 dành cho
+                                danh nghiệp FDI</a></h3>
+                        <p class="news-item__date text-desc">23-3-2026</p>
+                        <div class="news-item__footer flex end-hor"><span class="news-item__link text-color-gray">Xem
+                                thêm →</span></div>
+                    </article>
+
+                    <article class="cursor-pointer news-container__item col-4 flex flex-col gap-10 pos-rel ">
+                        <img src="./img/news/news-3.jpg" alt="Chính sách thuế mới 3" class="news-item__img img-content">
+                        <h3 class="news-item__title bold"><a href="./news-detail.html"
+                                class="stretched-link text-color-black">Chính sách Thuế mới nhất 2026 dành cho
+                                doanh nghiệp FDI</a></h3>
+                        <p class="news-item__date text-desc">23-3-2026</p>
+                        <div class="news-item__footer flex end-hor"><span class="news-item__link text-color-gray">Xem
+                                thêm →</span></div>
+                    </article>
+
+                    <article class="cursor-pointer news-container__item col-4 flex flex-col gap-10 pos-rel ">
+                        <img src="./img/news/news-4.jpg" alt="Chính sách thuế mới 4" class="news-item__img img-content">
+                        <h3 class="news-item__title bold"><a href="./news-detail.html"
+                                class="stretched-link text-color-black">Chính sách Thuế mới nhất 2026 dành cho
+                                doanh nghiệp FDI</a></h3>
+                        <p class="news-item__date text-desc">23-3-2026</p>
+                        <div class="news-item__footer flex end-hor"><span class="news-item__link text-color-gray">Xem
+                                thêm →</span></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <section class="category-news-section container-f container-padding flex center-hor ">
+            <div class="container-l flex flex-col gap-30">
+
+                <div class="category-header flex jus-sb center-ver">
+                    <h2 class="bold uppercase text-header-size color-primary">Tin tuyển dụng</h2>
+                    <a href="./news-cat.html" class="text-desc italic color-gray">Xem thêm →</a>
+                </div>
+
+                <div class="category-list flex flex-wrap gap-20 center-hor">
+                    <article class="cursor-pointer news-container__item col-4 flex flex-col gap-10 pos-rel ">
+                        <img src="./img/news/news-1.jpg" alt="Chính sách thuế mới 1" class="news-item__img img-content">
+                        <h3 class="news-item__title bold"><a href="./news-detail.html"
+                                class="stretched-link text-color-black">Chính sách Thuế mới nhất 2026 dành cho
+                                doanh nghiệp FDI</a></h3>
+                        <p class="news-item__date text-desc">23-3-2026</p>
+                        <div class="news-item__footer flex end-hor"><span class="news-item__link text-color-gray">Xem
+                                thêm →</span></div>
+                    </article>
+
+                    <article class="cursor-pointer news-container__item col-4 flex flex-col gap-10 pos-rel ">
+                        <img src="./img/news/news-2.jpg" alt="Chính sách thuế mới 2" class="news-item__img img-content">
+                        <h3 class="news-item__title bold"><a href="./news-detail.html"
+                                class="stretched-link text-color-black">Chính sách Thuế mới nhất 2026 dành cho
+                                danh nghiệp FDI</a></h3>
+                        <p class="news-item__date text-desc">23-3-2026</p>
+                        <div class="news-item__footer flex end-hor"><span class="news-item__link text-color-gray">Xem
+                                thêm →</span></div>
+                    </article>
+
+                    <article class="cursor-pointer news-container__item col-4 flex flex-col gap-10 pos-rel ">
+                        <img src="./img/news/news-3.jpg" alt="Chính sách thuế mới 3" class="news-item__img img-content">
+                        <h3 class="news-item__title bold"><a href="./news-detail.html"
+                                class="stretched-link text-color-black">Chính sách Thuế mới nhất 2026 dành cho
+                                doanh nghiệp FDI</a></h3>
+                        <p class="news-item__date text-desc">23-3-2026</p>
+                        <div class="news-item__footer flex end-hor"><span class="news-item__link text-color-gray">Xem
+                                thêm →</span></div>
+                    </article>
+
+                    <article class="cursor-pointer news-container__item col-4 flex flex-col gap-10 pos-rel ">
+                        <img src="./img/news/news-4.jpg" alt="Chính sách thuế mới 4" class="news-item__img img-content">
+                        <h3 class="news-item__title bold"><a href="./news-detail.html"
+                                class="stretched-link text-color-black">Chính sách Thuế mới nhất 2026 dành cho
+                                doanh nghiệp FDI</a></h3>
+                        <p class="news-item__date text-desc">23-3-2026</p>
+                        <div class="news-item__footer flex end-hor"><span class="news-item__link text-color-gray">Xem
+                                thêm →</span></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <section class="category-news-section container-f container-padding flex center-hor bg-white-second">
+            <div class="container-l flex flex-col gap-30">
+
+                <div class="category-header flex jus-sb center-ver">
+                    <h2 class="bold uppercase text-header-size color-primary">Tin nội bộ</h2>
+                    <a href="./news-cat.html" class="text-desc italic color-gray">Xem thêm →</a>
+                </div>
+
+                <div class="category-list flex flex-wrap gap-20 center-hor">
+                    <article class="cursor-pointer news-container__item col-4 flex flex-col gap-10 pos-rel ">
+                        <img src="./img/news/news-1.jpg" alt="Chính sách thuế mới 1" class="news-item__img img-content">
+                        <h3 class="news-item__title bold"><a href="./news-detail.html"
+                                class="stretched-link text-color-black">Chính sách Thuế mới nhất 2026 dành cho
+                                doanh nghiệp FDI</a></h3>
+                        <p class="news-item__date text-desc">23-3-2026</p>
+                        <div class="news-item__footer flex end-hor"><span class="news-item__link text-color-gray">Xem
+                                thêm →</span></div>
+                    </article>
+
+                    <article class="cursor-pointer news-container__item col-4 flex flex-col gap-10 pos-rel ">
+                        <img src="./img/news/news-2.jpg" alt="Chính sách thuế mới 2" class="news-item__img img-content">
+                        <h3 class="news-item__title bold"><a href="./news-detail.html"
+                                class="stretched-link text-color-black">Chính sách Thuế mới nhất 2026 dành cho
+                                danh nghiệp FDI</a></h3>
+                        <p class="news-item__date text-desc">23-3-2026</p>
+                        <div class="news-item__footer flex end-hor"><span class="news-item__link text-color-gray">Xem
+                                thêm →</span></div>
+                    </article>
+
+                    <article class="cursor-pointer news-container__item col-4 flex flex-col gap-10 pos-rel ">
+                        <img src="./img/news/news-3.jpg" alt="Chính sách thuế mới 3" class="news-item__img img-content">
+                        <h3 class="news-item__title bold"><a href="./news-detail.html"
+                                class="stretched-link text-color-black">Chính sách Thuế mới nhất 2026 dành cho
+                                doanh nghiệp FDI</a></h3>
+                        <p class="news-item__date text-desc">23-3-2026</p>
+                        <div class="news-item__footer flex end-hor"><span class="news-item__link text-color-gray">Xem
+                                thêm →</span></div>
+                    </article>
+
+                    <article class="cursor-pointer news-container__item col-4 flex flex-col gap-10 pos-rel ">
+                        <img src="./img/news/news-4.jpg" alt="Chính sách thuế mới 4" class="news-item__img img-content">
+                        <h3 class="news-item__title bold"><a href="./news-detail.html"
+                                class="stretched-link text-color-black">Chính sách Thuế mới nhất 2026 dành cho
+                                doanh nghiệp FDI</a></h3>
+                        <p class="news-item__date text-desc">23-3-2026</p>
+                        <div class="news-item__footer flex end-hor"><span class="news-item__link text-color-gray">Xem
+                                thêm →</span></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="container-f bg-white center-ver" data-include="./component/footer.html"></footer>
+    <section class="btntotop__container pos-fixed bg-white" data-include="./component/rolltotop.html" id="btnToTop">
+    </section>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script type="text/javascript" src="./js/frontend.js"></script>
+</body>
+
+</html>
+
+
+
+
+

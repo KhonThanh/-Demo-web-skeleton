@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon | Quên mật khẩu</title>
+    <link rel="icon" type="image/png" href="./img/logo/logo-favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" href="../css/style.min.css">
+    <!-- <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+    <link rel="stylesheet" href="./css/utility.css"> -->
+</head>
+
+<body>
+    <header class="container-f" data-include="./component/header.html"></header>
+    <main class="container-f flex flex-col center-hor">
+        <section class="flex bg-gray container-f">
+            <div class=" container-l nav-bar__container">
+                <a href="javascript:void(0)" class="nav-bar__item">Trang chủ</a>
+                <a href="javascript:void(0)" class="nav-bar__item">Quên mật khẩu</a>
+            </div>
+        </section>
+        <section class="container-f flex center-ver container-padding">
+            <div class="auth-section container-xxs flex flex-col gap-20 center-ver" id="section-forgot">
+
+                <div class="auth-section__logo">
+                    <img src="../img/logo/logo-top.webp" alt="Logo">
+                </div>
+
+                <h3 class="auth-title">Quên mật khẩu</h3>
+
+                <form class="js-validate-form flex flex-col gap-20" data-form="forgot">
+
+                    <p>Email bạn dùng đăng ký</p>
+                    <div class="form-group flex">
+                        <input type="email" name="email" placeholder="Nhập email của bạn" required autocomplete="email"
+                            data-msg="Vui lòng nhập email hợp lệ">
+                        <small class="error-msg"></small>
+                    </div>
+
+                    <button type="submit">Gửi yêu cầu</button>
+
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer class="container-f bg-white center-ver" data-include="./component/footer.html"></footer>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script type="text/javascript" src="./js/frontend.js"></script>
+</body>
+
+</html>
+
+
+
+
+

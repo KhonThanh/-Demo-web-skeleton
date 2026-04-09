@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon | Thay đổi nội dung kinh doanh</title>
+    <link rel="icon" type="image/png" href="./img/logo/logo-favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" href="../css/style.min.css">
+    <!-- <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+    <link rel="stylesheet" href="./css/utility.css"> -->
+</head>
+
+<body>
+    <header class="container-f" data-include="./component/header.html"></header>
+    <main class="container-f flex flex-col center-hor">
+        <section class="flex bg-gray container-f">
+            <div class=" container-l nav-bar__container">
+                <a href="javascript:void(0)" class="nav-bar__item">Trang chủ</a>
+                <a href="javascript:void(0)" class="nav-bar__item">Thay đổi nội dung đăng ký kinh doanh</a>
+            </div>
+        </section>
+        <section class="container-f container-padding flex center-hor">
+            <div class="container-l flex gap-20 flex-wrap">
+                <div class="col-section-2 flex-1 flex flex-col gap-20">
+                    <h1 class="text-header-size bold text-color-primary">Thay đổi nội dung đăng ký kinh doanh</h1>
+
+                    <div class="bg-white custom-item flex flex-col gap-20" style="padding: 30px;">
+                        <ul class="flex flex-col gap-10" style="padding-left: 20px;">
+                            <li>Quý vị đang có nhu cầu khởi nghiệp, hay doanh nghiệp của quý vị đang cần phải thay đổi
+                                nội dung đăng ký kinh doanh?</li>
+                            <li>Nếu đi thuê dịch vụ thì phí là bao nhiêu? Và phải làm những việc gì?</li>
+                            <li>Thật đơn giản, quý vị hãy nhập thông tin cần thiết chúng tôi sẽ tính phí thử để quý vị
+                                tham khảo, và tư vấn các bước cần thực hiện:</li>
+                        </ul>
+
+                        <form class="js-validate-form flex flex-col gap-20" data-form="change-info">
+                            <div class="form-row col-1 flex flex-col gap-10">
+                                <p class="bold field-label">Thay đổi nội dung đăng ký kinh doanh:</p>
+                                <div class="flex flex-wrap gap-10">
+                                    <label class="custom-item flex center-ver gap-10 cursor-pointer" >
+                                        <input type="checkbox" name="change_type" value="tru_so">
+                                        <span>Thay đổi trụ sở</span>
+                                    </label>
+                                    <label class="custom-item flex center-ver gap-10 cursor-pointer">
+                                        <input type="checkbox" name="change_type" value="thanh_vien">
+                                        <span>Thay đổi thành viên</span>
+                                    </label>
+                                    <label class="custom-item flex center-ver gap-10 cursor-pointer">
+                                        <input type="checkbox" name="change_type" value="nganh_nghe">
+                                        <span>Thay đổi ngành nghề</span>
+                                    </label>
+                                    <label class="custom-item flex center-ver gap-10 cursor-pointer">
+                                        <input type="checkbox" name="change_type" value="ten_dn">
+                                        <span>Thay đổi tên doanh nghiệp</span>
+                                    </label>
+                                    <label class="custom-item flex center-ver gap-10 cursor-pointer">
+                                        <input type="checkbox" name="change_type" value="von">
+                                        <span>Thay đổi vốn</span>
+                                    </label>
+                                    <label class="custom-item flex center-ver gap-10 cursor-pointer">
+                                        <input type="checkbox" name="change_type" value="loai_hinh">
+                                        <span>Thay đổi loại hình doanh nghiệp</span>
+                                    </label>
+                                    <label class="custom-item flex center-ver gap-10 cursor-pointer">
+                                        <input type="checkbox" name="change_type" value="chi_nhanh">
+                                        <span>Thay đổi chi nhánh, VPĐD</span>
+                                    </label>
+                                    <label class="custom-item flex center-ver gap-10 cursor-pointer">
+                                        <input type="checkbox" name="change_type" value="giai_the">
+                                        <span>Giải thể doanh nghiệp</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-row col-1 flex flex-col gap-10">
+                                <p class="bold field-label">Yêu cầu khác</p>
+                                <textarea name="other_req" class="custom-item col-1" rows="4"></textarea>
+                            </div>
+
+                            <div class="col-1 flex">
+                                <button type="submit"
+                                    class="bg-secondary text-color-white btn-custom-fit cursor-pointer">
+                                    Thành tiền
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-section-2 flex-1 flex">
+                    <img src="./img/service/building-1.jpg" alt="Thay đổi nội dung kinh doanh"
+                        class="custom-item img-content col-1">
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="container-f bg-white center-ver" data-include="./component/footer.html"></footer>
+    <section class="btntotop__container pos-fixed bg-white" data-include="./component/rolltotop.html" id="btnToTop">
+    </section>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script type="text/javascript" src="./js/frontend.js"></script>
+</body>
+
+</html>
+
+
+
+
+
