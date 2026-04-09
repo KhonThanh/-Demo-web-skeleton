@@ -7,8 +7,9 @@
     <title>Horizon | Trang chủ</title>
     <link rel="icon" type="image/png" href="./img/logo/logo-favicon.png">
     <link
-        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Roboto:wght@400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet">
+    <link rel="preload" as="image" href="./img/banner/banner-home.webp">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" href="../css/style.min.css">
     <!-- <link rel="stylesheet" href="./css/base.css">
@@ -233,25 +234,25 @@
                     <form class="js-validate-form  calc-form-custom bg-white flex flex-wrap gap-20"
                         data-form="calculate-fee">
                         <div class="form-row col-2 flex flex-col gap-10">
-                            <p class="bold field-label">Số lượng hóa đơn phát sinh (Hóa đơn) / tháng</p>
+                            <label for="invoice_qty" class="bold field-label">Số lượng hóa đơn phát sinh (Hóa đơn) / tháng</label>
                             <div class="form-group flex">
-                                <input type="number" name="invoice_qty" class="form-input"
+                                <input type="number" id="invoice_qty" name="invoice_qty" class="form-input"
                                     placeholder="Nhập số lượng..." required>
                                 <small class="error-msg"></small>
                             </div>
                         </div>
                         <div class="form-row col-2 flex flex-col gap-10 end-hor">
-                            <p class="bold field-label">Doanh thu / (tỷ VNĐ) / tháng</p>
+                            <label for="revenue" class="bold field-label">Doanh thu / (tỷ VNĐ) / tháng</label>
                             <div class="form-group flex">
-                                <input type="number" name="revenue" class="form-input" placeholder="Nhập doanh thu..."
+                                <input type="number" id="revenue" name="revenue" class="form-input" placeholder="Nhập doanh thu..."
                                     required>
                                 <small class="error-msg"></small>
                             </div>
                         </div>
                         <div class="form-row col-2 flex flex-col gap-10">
-                            <p class="bold field-label">Ngành nghề chính</p>
+                            <label for="industry" class="bold field-label">Ngành nghề chính</label>
                             <div class="form-group flex flex-1">
-                                <select name="industry" class="form-select" required>
+                                <select id="industry" name="industry" class="form-select" required>
                                     <option value="">Chọn ngành nghề chính</option>
                                     <option value="trade">Thương mại</option>
                                     <option value="service">Dịch vụ</option>
@@ -261,44 +262,44 @@
                             </div>
                         </div>
                         <div class="form-row col-2 flex flex-col gap-10">
-                            <p class="bold field-label">Số lao động / ( người )</p>
+                            <label for="staff_qty" class="bold field-label">Số lao động / ( người )</label>
                             <div class="form-group flex flex-1">
-                                <input type="number" name="staff_qty" class="form-input"
+                                <input type="number" id="staff_qty" name="staff_qty" class="form-input"
                                     placeholder="Nhập số lao động..." required>
                                 <small class="error-msg"></small>
                             </div>
                         </div>
                         <div class="form-row col-2 flex flex-col gap-10">
-                            <p class="bold field-label">Đăng ký BHYT, BHXH</p>
+                            <label for="insurance" class="bold field-label">Đăng ký BHYT, BHXH</label>
                             <div class="form-group flex flex-1">
-                                <select name="insurance" class="form-select" required>
+                                <select id="insurance" name="insurance" class="form-select" required>
                                     <option value="no">Không đăng ký</option>
                                     <option value="yes">Có đăng ký</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-row col-2 flex flex-col gap-10">
-                            <p class="bold field-label">Chi nhánh VPĐD</p>
+                            <label for="branch" class="bold field-label">Chi nhánh VPĐD</label>
                             <div class="form-group flex flex-1">
-                                <select name="branch" class="form-select" required>
+                                <select id="branch" name="branch" class="form-select" required>
                                     <option value="no">Không</option>
                                     <option value="yes">Có</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-row col-2 flex flex-col gap-10">
-                            <p class="bold field-label">Địa điểm công ty</p>
+                            <label for="location" class="bold field-label">Địa điểm công ty</p>
                             <div class="form-group flex">
-                                <select name="location" class="form-select" required>
+                                <select id="location" name="location" class="form-select" required>
                                     <option value="hcm">Trong tp HCM</option>
                                     <option value="other">Ngoài tp HCM</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-row col-2 flex flex-col gap-10">
-                            <p class="bold field-label">Loại hình doanh nghiệp</p>
+                            <label for="company_type" class="bold field-label">Loại hình doanh nghiệp</label>
                             <div class="form-group flex">
-                                <select name="company_type" class="form-select" required>
+                                <select id="company_type" name="company_type" class="form-select" required>
                                     <option value="tnhh">TNHH, DNTN</option>
                                     <option value="joint_stock">Công ty cổ phần</option>
                                     <option value="fdi">Vốn đầu tư nước ngoài (FDI)</option>
@@ -306,10 +307,7 @@
                             </div>
                         </div>
                         <div class="col-1 flex">
-                            <button type="submit" class="btn-submit-calc bg-secondary text-color-white btn-custom-fit"
-                                style="padding: 10px 30px; border: none; font-weight: bold;">
-                                Thành tiền
-                            </button>
+                            <button type="submit" class="btn-submit-calc bg-secondary text-color-white btn-custom-fit bold">Thành tiền</button>
                         </div>
                     </form>
                 </div>
@@ -339,17 +337,10 @@
     <footer class="container-f bg-white center-ver" data-include="./component/footer.html"></footer>
     <section class="btntotop__container pos-fixed bg-white" data-include="./component/rolltotop.html" id="btnToTop">
     </section>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script type="text/javascript" src="./js/frontend.js"></script>
-    <script type="text/javascript" src="./js/gulpfile.js"></script>
+    <script defer type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script defer type="text/javascript" src="./js/frontend.js"></script>
+    <script defer type="text/javascript" src="./js/gulpfile.js"></script>
 </body>
 
 </html>
-
-
-
-
-
-

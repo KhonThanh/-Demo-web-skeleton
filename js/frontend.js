@@ -13,11 +13,15 @@ function includeHTML(callback) {
     const file = el.getAttribute("data-include");
     if (!file) return;
 
-    const cacheKey = `comp-${file}`;
+    // Sử dụng versioning thay vì cache-busting bằng Date.now() để tận dụng cache trình duyệt
+    const version = "1.0.0"; // Thay đổi version này khi có cập nhật component
+    const cacheKey = `comp-${file}-${version}`;
     let html = sessionStorage.getItem(cacheKey);
 
     if (!html) {
-      const res = await fetch(`${file}?v=${Date.now()}`, { cache: "no-store" });
+      // Xóa cache cũ của component này nếu có
+      Object.keys(sessionStorage).forEach(key => { if (key.startsWith(`comp-${file}`)) sessionStorage.removeItem(key); });
+      const res = await fetch(file, { cache: "reload" }); // Tải lại file mới nhất từ server
       html = await res.text();
       sessionStorage.setItem(cacheKey, html);
     }
@@ -415,25 +419,6 @@ function generateHeadingLinks({
   }
 }
 
-// js bật tắt menu
-function toggleMenu(buttonSelector, menuSelector) {
-  const button = document.querySelector(buttonSelector);
-  const menu = document.querySelector(menuSelector);
-
-  if (!button || !menu) return;
-
-  button.addEventListener('click', (e) => {
-    e.stopPropagation();
-    menu.classList.toggle('active');
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!menu.contains(e.target) && !button.contains(e.target)) {
-      menu.classList.remove('active');
-    }
-  });
-}
-
 // js roll to top
 function initScrollToTop(btnId = "btnToTop", showOffset = 1000) {
   const scrollBtn = document.getElementById(btnId);
@@ -667,21 +652,18 @@ document.addEventListener("DOMContentLoaded", () => {
         activeClass: "active",
       },
       {
-        trigger: ".header-bottom .menu-container__bar",
+        trigger: ".menu-container__bar",
         target: ".m-menu",
         behavior: "toggle",
         activeClass: "active",
         closeOnOutside: true,
         closeOnEsc: true,
+        innerSelector: ".m-menu__link" // Đảm bảo click bên trong menu không bị đóng
       },
       {
         trigger: ".news-detail__content h3",
-        behavior: "activate",
+        behavior: "activate", // 'activate' tự động xử lý việc chỉ có 1 item active
         activeClass: "active",
-        onToggle: (trigger) => {
-          document.querySelectorAll(".news-detail__content h3").forEach(h => h.classList.remove("active"));
-          trigger.classList.add("active");
-        }
       },
     ]);
     // 🟡 roll to the top
@@ -689,7 +671,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✨ 4️⃣ HIỆU ỨNG ẢNH & REVEAL
     applyImageEnhancements();
     initRevealEffect();
-    validateField('.js-validate-form')
+    initFormValidation();
   });
 });
 
