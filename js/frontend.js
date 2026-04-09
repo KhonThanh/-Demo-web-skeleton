@@ -597,6 +597,50 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     });
 
+    initSwiperSlider({
+      mainSelector: '.service-list',
+      minSlides: 8, 
+      autoplay: { delay: 4000, disableOnInteraction: false },
+      loop: true,
+      slidesPerView: 1, // Mặc định cho mobile
+      spaceBetween: 20,
+      navigation: {
+        nextEl: '.service-list .swiper-button-next',
+        prevEl: '.service-list .swiper-button-prev',
+      },
+      pagination: {
+        el: '.service-list .swiper-pagination',
+        clickable: true,
+      },
+      breakpoints: {
+        500: { slidesPerView: 2, spaceBetween: 20 },
+        768: { slidesPerView: 3, spaceBetween: 20 },
+        1200: { slidesPerView: 4, spaceBetween: 20 },
+      },
+    });
+
+    // 📰 Slide tin tức (Swiper)
+    initSwiperSlider({
+      mainSelector: '.news-list',
+      minSlides: 6, // Đảm bảo đủ slide cho loop mượt mà trên desktop (3 slidesPerView * 2)
+      autoplay: { delay: 4000, disableOnInteraction: false },
+      loop: true,
+      slidesPerView: 1, // Mặc định cho mobile
+      spaceBetween: 20,
+      navigation: {
+        nextEl: '.news-list .swiper-button-next',
+        prevEl: '.news-list .swiper-button-prev',
+      },
+      pagination: {
+        el: '.news-list .swiper-pagination',
+        clickable: true,
+      },
+      breakpoints: {
+        768: { slidesPerView: 2, spaceBetween: 20 },
+        1024: { slidesPerView: 3, spaceBetween: 20 },
+      },
+    });
+    
     initToggleSystem([
       {
         trigger: ".pagination-btn__custom.page-num",
