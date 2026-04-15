@@ -237,130 +237,47 @@ function initRevealEffect() {
   sections.forEach(sec => sec.classList.add("hidden-section"));
 
   let revealIndex = 0;
+  let resetTimeout; // Biến dùng để reset bộ đếm
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const el = entry.target;
-        el.style.transitionDelay = `${revealIndex * 20}ms`;
-        revealIndex++;
+
+        // Tăng delay lên 100ms (thay vì 20ms) để thấy rõ sự nối đuôi "ảo diệu" hơn
+        el.style.transitionDelay = `${revealIndex * 100}ms`;
+
         el.classList.add("show-up");
         observer.unobserve(el);
+
+        revealIndex++;
+
+        // Bí kíp ở đây: Nếu trong vòng 100ms không có section nào mới xuất hiện
+        // thì reset bộ đếm về 0. Tránh việc các section ở cuối trang bị delay mấy giây.
+        clearTimeout(resetTimeout);
+        resetTimeout = setTimeout(() => {
+          revealIndex = 0;
+        }, 100);
       }
     });
-  }, { threshold: 0.08, rootMargin: "0px 0px -10% 0px" });
+  }, {
+    threshold: 0.1, // Hiện ra 10% là bắt đầu kích hoạt
+    rootMargin: "0px 0px -10% 0px" // Kích hoạt sớm hơn 1 xíu để khách không thấy khoảng trắng
+  });
 
   sections.forEach(sec => observer.observe(sec));
 }
 
-// 🧩 1️⃣ Hàm dùng chung cho tất cả slick
-function initSlickSlider({
-  mainSelector,
-  navSelector = null,
-  minSlides = 0,
-  mainOptions = {},
-  navOptions = {},
-  prevBtnSelector = null,
-  nextBtnSelector = null
-}) {
-  const $main = $(mainSelector);
-  if (!$main.length) return;
+function extractHeadingData(contentSelector, headingTags = "h1, h2, h3, h4, h5, h6") {
+  const content = contentSelector === "all" ? document : document.querySelector(contentSelector);
 
-  // --- Helper: clone thêm slide nếu ít hơn minSlides ---
-  const ensureMinSlides = ($el, minCount) => {
-    const $items = $el.children();
-    let count = $items.length;
-    let i = 0;
-    while (count < minCount) {
-      $el.append($items.eq(i % $items.length).clone());
-      count++;
-      i++;
-    }
-  };
-
-  // --- Có nav → slider kép ---
-  if (navSelector) {
-    const $nav = $(navSelector);
-    if (!$nav.length) return;
-
-    if (minSlides > 0) ensureMinSlides($nav, minSlides);
-
-    if (!$main.hasClass("slick-initialized")) {
-      $main.slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        fade: true,
-        infinite: true,
-        arrows: false,
-        asNavFor: navSelector,
-        ...mainOptions
-      });
-    }
-
-    if (!$nav.hasClass("slick-initialized")) {
-      $nav.slick({
-        slidesToShow: 8,
-        slidesToScroll: 1,
-        focusOnSelect: true,
-        infinite: true,
-        arrows: false,
-        centerMode: true,
-        centerPadding: "0px",
-        asNavFor: mainSelector,
-        ...navOptions
-      });
-    }
-
-    // --- Nút prev/next riêng (nếu có) ---
-    if (prevBtnSelector) {
-      const prevBtn = document.querySelector(prevBtnSelector);
-      if (prevBtn) prevBtn.addEventListener("click", () => $main.slick("slickPrev"));
-    }
-
-    if (nextBtnSelector) {
-      const nextBtn = document.querySelector(nextBtnSelector);
-      if (nextBtn) nextBtn.addEventListener("click", () => $main.slick("slickNext"));
-    }
+  if (!content) {
+    console.warn(`Không tìm thấy vùng quét: ${contentSelector}`);
+    return [];
   }
 
-  // --- Không có nav → slider đơn ---
-  else {
-    if (minSlides > 0) ensureMinSlides($main, minSlides);
-
-    if (!$main.hasClass("slick-initialized")) {
-      $main.slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: true,
-        infinite: true,
-        ...mainOptions
-      });
-    }
-
-    if (prevBtnSelector) {
-      const prevBtn = document.querySelector(prevBtnSelector);
-      if (prevBtn) prevBtn.addEventListener("click", () => $main.slick("slickPrev"));
-    }
-
-    if (nextBtnSelector) {
-      const nextBtn = document.querySelector(nextBtnSelector);
-      if (nextBtn) nextBtn.addEventListener("click", () => $main.slick("slickNext"));
-    }
-  }
-}
-
-
-// chức năng đổi tên và gán link vào a và đạc biệt thêm thẻ li a vào mục lục bài viét
-function generateHeadingLinks({
-  contentSelector,
-  outputSelector = null,
-  linkSelector = null,
-  toggleSelector = null
-}) {
-  const content = document.querySelector(contentSelector);
-  if (!content) return;
-
-  const headings = content.querySelectorAll("h1, h2, h3, h4, h5, h6");
-  if (!headings.length) return;
+  const headings = content.querySelectorAll(headingTags);
+  if (!headings.length) return [];
 
   const toSlug = str => str
     .normalize("NFD")
@@ -370,53 +287,80 @@ function generateHeadingLinks({
     .replace(/[^\w\-]/g, "")
     .toLowerCase();
 
+  const data = [];
+
   headings.forEach((h, i) => {
     const text = h.textContent.trim();
-    const id = toSlug(text) || `heading-${i}`;
+
+    let id = h.id || toSlug(text) || `heading-${i}`;
+
+    if (document.getElementById(id) && document.getElementById(id) !== h) {
+      let baseId = id;
+      let counter = 1;
+      while (document.getElementById(`${baseId}-${counter}`) && document.getElementById(`${baseId}-${counter}`) !== h) {
+        counter++;
+      }
+      id = `${baseId}-${counter}`;
+    }
+
     h.id = id;
+    data.push({
+      id: id,
+      text: text,
+      tag: h.tagName.toLowerCase()
+    });
   });
 
-  if (outputSelector) {
-    const tocBody = document.querySelector(outputSelector);
-    if (tocBody) {
-      tocBody.innerHTML = "";
-      headings.forEach(h => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = `#${h.id}`;
-        a.textContent = h.textContent.trim();
-        li.appendChild(a);
-        tocBody.appendChild(li);
-      });
-    }
+  return data;
+}
 
+// HÀM 2: NHÂN BẢN TEMPLATE VÀ ĐỔ DỮ LIỆU
+function renderDynamicList(headingData, targetSelector) {
+  if (!headingData || headingData.length === 0) return;
 
-    if (toggleSelector && tocBody) {
-      const toggle = document.querySelector(toggleSelector);
-      toggle.addEventListener("click", e => {
-        e.stopPropagation();
-        tocBody.classList.toggle("open");
-      });
-      document.addEventListener("click", e => {
-        if (!e.target.closest(toggleSelector)) tocBody.classList.remove("open");
-      });
-    }
+  const targetContainer = document.querySelector(targetSelector);
+  if (!targetContainer) {
+    console.log('Không tìm thấy menu');
+    return;
   }
 
+  const template = targetContainer.firstElementChild;
+  if (!template) {
+    console.warn(`Vui lòng để lại 1 thẻ con trong ${targetSelector} để làm mẫu!`);
+    return;
+  }
 
-  if (linkSelector) {
-    const links = document.querySelectorAll(linkSelector);
-    const count = Math.min(headings.length, links.length);
-    for (let i = 0; i < count; i++) {
-      const heading = headings[i];
-      const link = links[i];
-      link.setAttribute("href", `#${heading.id}`);
-      link.addEventListener("click", e => {
+  targetContainer.innerHTML = "";
+
+  headingData.forEach(item => {
+    const clone = template.cloneNode(true);
+    const aTag = clone.querySelector("a");
+
+    if (aTag) {
+      aTag.href = `#${item.id}`;
+      let rawText = item.text;
+      let formattedText = rawText.charAt(0).toUpperCase() + rawText.slice(1).toLowerCase();
+      aTag.textContent = formattedText;
+
+      aTag.addEventListener("click", e => {
         e.preventDefault();
-        heading.scrollIntoView({ behavior: "smooth", block: "start" });
+        const targetSection = document.getElementById(item.id);
+
+        if (targetSection) {
+          const headerHeight = 300;
+          const elementPosition = targetSection.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - headerHeight;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
       });
     }
-  }
+
+    targetContainer.appendChild(clone);
+  });
 }
 
 // 🧩 2️⃣ Hàm dùng chung cho tất cả Swiper
@@ -573,16 +517,6 @@ function initFormValidation(root = document) {
 // ----------- Vùng gọi biến --------------
 document.addEventListener("DOMContentLoaded", () => {
   includeHTML(() => {
-    // 📚 1️⃣ MỤC LỤC & MENU LIÊN KẾT
-    generateHeadingLinks({
-      contentSelector: ".blog-content",
-      outputSelector: ".table-heading__body ul",
-      toggleSelector: ".table-heading__top"
-    });
-    generateHeadingLinks({
-      contentSelector: "#intro-content",
-      linkSelector: ".menu-shortcut__container .intro-banner__shortcut"
-    });
     // 🟢 Slide banner chính (chuyển sang Swiper)
     initSwiperSlider({
       mainSelector: '.slide-container',
@@ -599,7 +533,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initSwiperSlider({
       mainSelector: '.service-list',
-      minSlides: 8, 
+      minSlides: 8,
       autoplay: { delay: 4000, disableOnInteraction: false },
       loop: true,
       slidesPerView: 1, // Mặc định cho mobile
@@ -619,10 +553,9 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     });
 
-    // 📰 Slide tin tức (Swiper)
     initSwiperSlider({
       mainSelector: '.news-list',
-      minSlides: 6, // Đảm bảo đủ slide cho loop mượt mà trên desktop (3 slidesPerView * 2)
+      minSlides: 8,
       autoplay: { delay: 4000, disableOnInteraction: false },
       loop: true,
       slidesPerView: 1, // Mặc định cho mobile
@@ -636,11 +569,12 @@ document.addEventListener("DOMContentLoaded", () => {
         clickable: true,
       },
       breakpoints: {
-        768: { slidesPerView: 2, spaceBetween: 20 },
-        1024: { slidesPerView: 3, spaceBetween: 20 },
+        500: { slidesPerView: 2, spaceBetween: 20 },
+        768: { slidesPerView: 3, spaceBetween: 20 },
+        1200: { slidesPerView: 3, spaceBetween: 20 },
       },
     });
-    
+
     initToggleSystem([
       {
         trigger: ".pagination-btn__custom.page-num",

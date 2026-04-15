@@ -317,16 +317,23 @@
 }
 
 /* css fade */
+/* Trạng thái ẩn ban đầu */
 .hidden-section {
     opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.9s ease-out, transform 0.9s ease-out, filter 0.9s ease-out;
+    transform: translateY(30px);
+    filter: blur(4px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+
     will-change: opacity, transform, filter;
 }
 
-.show-up {
+/* Trạng thái hiển thị (Sang - Xịn - Mịn) */
+.hidden-section.show-up {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
 }
 
 /* css roll to top */
@@ -693,10 +700,12 @@
     z-index: 2;
     width: 32px;
     height: 32px;
-    display: flex; /* Ensure flex for centering content */
+    display: flex;
+    /* Ensure flex for centering content */
     align-items: center;
     justify-content: center;
-    font-size: 0; /* Hide default text */
+    font-size: 0;
+    /* Hide default text */
     background: var(--white-color);
     border-radius: 50%;
     border: 1px solid var(--gray-color);
@@ -867,9 +876,15 @@
     opacity: 0.8;
 }
 
-.news-item { /* Swiper handles spacing, no margin needed */ }
+.news-item {
+    /* Swiper handles spacing, no margin needed */
+}
 
-.news-list { max-height: unset; /* Let Swiper manage height */ }
+.news-list {
+    max-height: unset;
+    /* Let Swiper manage height */
+}
+
 .news-excerpt {
     min-height: 48px;
     -webkit-line-clamp: 2;
@@ -877,7 +892,9 @@
     width: 100%;
 }
 
-.news-btn { /* No specific styles, can be removed if not used elsewhere */ }
+.news-btn {
+    /* No specific styles, can be removed if not used elsewhere */
+}
 
 .about-section {}
 
@@ -1055,53 +1072,61 @@ footer {
 }
 
 .slide-container .swiper-pagination-bullet {
-    background: var(--white-color); 
+    background: var(--white-color);
     opacity: 0.7;
 }
 
 .slide-container .swiper-pagination-bullet-active {
-    background: var(--primary-color); 
+    background: var(--primary-color);
     opacity: 1;
 }
 
 /* Swiper pagination dots for news-list */
 .news-list .swiper-pagination {
     position: absolute;
-    bottom: 10px; /* Adjust as needed */
+    bottom: 10px;
+    /* Adjust as needed */
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
 }
 
 .news-list .swiper-pagination-bullet {
-    background: var(--gray-color); /* Default color for news dots */
+    background: var(--gray-color);
+    /* Default color for news dots */
     opacity: 0.7;
-    width: 8px; /* Default size */
-    height: 8px; /* Default size */
-    margin: 0 4px; /* Spacing between dots */
+    width: 8px;
+    /* Default size */
+    height: 8px;
+    /* Default size */
+    margin: 0 4px;
+    /* Spacing between dots */
 }
 
 .news-list .swiper-pagination-bullet-active {
-    background: var(--primary-color); /* Active color for news dots */
+    background: var(--primary-color);
+    /* Active color for news dots */
     opacity: 1;
 }
+
 .service-list .swiper-pagination {
     position: absolute;
-    bottom: 10px; /* Adjust as needed */
+    bottom: 10px;
+    /* Adjust as needed */
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
 }
 
 .service-list .swiper-pagination-bullet {
-    background: var(--gray-color); 
+    background: var(--gray-color);
     opacity: 0.7;
-    width: 8px; 
-    height: 8px; 
-    margin: 0 4px; 
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
 }
 
 .service-list .swiper-pagination-bullet-active {
-    background: var(--primary-color); 
+    background: var(--primary-color);
     opacity: 1;
 }

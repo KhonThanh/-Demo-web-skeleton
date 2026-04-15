@@ -55,7 +55,7 @@
         <section class="services-section container-f container-padding flex center-hor">
             <div class="container-l flex flex-col gap-20">
                 <h2 class="section-title text-center bold uppercase">Dịch vụ chuyên nghiệp</h2>
-                <div class="service-list swiper pos-rel">
+                <div class="service-list fill-view swiper pos-rel">
                     <div class="swiper-wrapper">
                         <article class="service-item swiper-slide">
                             <div class="service-item__content gap-10 custom-item bg-white flex flex-col pos-rel">
@@ -146,45 +146,52 @@
         <section class="news-section container-f bg-white-second container-padding flex center-hor">
             <div class="container-l flex flex-col gap-20">
                 <h2 class="section-title text-center bold uppercase">Tin tức chuyên ngành</h2>
-                <div class="news-list flex flex-wrap gap-20">
-                    <article class="news-item ">
-                        <div class="flex flex-col gap-10 news-item__container cursor-pointer">
-                            <img src="./img/news/n1.jpg" alt="News 1" class="news-img">
-                            <div class="news-content end-ver flex flex-col gap-10">
-                                <h3 class="news-title"><a href="./news-detail.html" class="stretched-link">Chính sách
-                                        thuế mới nhất 2024 dành cho doanh nghiệp FDI</a></h3>
-                                <p class="news-excerpt clamp-text">Cập nhật những thay đổi quan trọng trong luật quản lý
-                                    thuế...</p>
-                                <a href="javascript:void(0)" class="news-btn bold">→</a>
+                <div class="news-list fill-view swiper pos-rel">
+                    <div class="swiper-wrapper">
+                        <article class="news-item swiper-slide">
+                            <div class="flex flex-col gap-10 news-item__container cursor-pointer">
+                                <img src="./img/news/n1.jpg" alt="News 1" class="news-img">
+                                <div class="news-content end-ver flex flex-col gap-10">
+                                    <h3 class="news-title"><a href="./news-detail.html" class="stretched-link">Chính
+                                            sách
+                                            thuế mới nhất 2024 dành cho doanh nghiệp FDI</a></h3>
+                                    <p class="news-excerpt clamp-text">Cập nhật những thay đổi quan trọng trong luật
+                                        quản lý
+                                        thuế...</p>
+                                    <a href="javascript:void(0)" class="news-btn bold">→</a>
+                                </div>
                             </div>
-                        </div>
-                    </article>
-                    <article class="news-item ">
-                        <div class="flex flex-col gap-10 news-item__container cursor-pointer">
-                            <img src="./img/news/n1.jpg" alt="News 2" class="news-img">
-                            <div class="news-content end-ver flex flex-col gap-10">
-                                <h3 class="news-title"><a href="./news-detail.html" class="stretched-link">Hướng dẫn
-                                        quyết toán thuế thu nhập cá nhân người nước ngoài</a></h3>
-                                <p class="news-excerpt clamp-text">Các bước chi tiết để thực hiện kê khai thuế TNCN...
-                                </p>
-                                <a href="javascript:void(0)" class="news-btn bold">→</a>
+                        </article>
+                        <article class="news-item swiper-slide">
+                            <div class="flex flex-col gap-10 news-item__container cursor-pointer">
+                                <img src="./img/news/n1.jpg" alt="News 2" class="news-img">
+                                <div class="news-content end-ver flex flex-col gap-10">
+                                    <h3 class="news-title"><a href="./news-detail.html" class="stretched-link">Hướng dẫn
+                                            quyết toán thuế thu nhập cá nhân người nước ngoài</a></h3>
+                                    <p class="news-excerpt clamp-text">Các bước chi tiết để thực hiện kê khai thuế
+                                        TNCN...
+                                    </p>
+                                    <a href="javascript:void(0)" class="news-btn bold">→</a>
+                                </div>
                             </div>
-                        </div>
-                    </article>
-                    <article class="news-item ">
-                        <div class="flex flex-col gap-10 news-item__container cursor-pointer">
-                            <img src="./img/news/n1.jpg" alt="News 2" class="news-img">
-                            <div class="news-content end-ver flex flex-col gap-10">
-                                <h3 class="news-title"><a href="./news-detail.html" class="stretched-link">Hướng dẫn
-                                        quyết toán thuế thu nhập cá nhân người nước ngoài</a></h3>
-                                <p class="news-excerpt clamp-text">Các bước chi tiết để thực hiện kê khai thuế TNCN...
-                                </p>
-                                <a href="javascript:void(0)" class="news-btn bold">→</a>
+                        </article>
+                        <article class="news-item swiper-slide">
+                            <div class="flex flex-col gap-10 news-item__container cursor-pointer">
+                                <img src="./img/news/n1.jpg" alt="News 2" class="news-img">
+                                <div class="news-content end-ver flex flex-col gap-10">
+                                    <h3 class="news-title"><a href="./news-detail.html" class="stretched-link">Hướng dẫn
+                                            quyết toán thuế thu nhập cá nhân người nước ngoài</a></h3>
+                                    <p class="news-excerpt clamp-text">Các bước chi tiết để thực hiện kê khai thuế
+                                        TNCN...
+                                    </p>
+                                    <a href="javascript:void(0)" class="news-btn bold">→</a>
+                                </div>
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
                 </div>
-            </div>
         </section>
         <section class="about-section container-f container-padding flex center-hor">
             <div class="container-l flex center-ver gap-20 flex-wrap">
@@ -351,7 +358,6 @@
         src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script defer type="text/javascript" src="./js/frontend.js"></script>
-    <script defer type="text/javascript" src="./js/gulpfile.js"></script>
 </body>
 
 </html>
