@@ -557,6 +557,41 @@ function initUniversalActiveMenu(menuSelector = '', activeClassName = 'active') 
     }
 }
 
+// js rate star cmt
+// rate stars
+function initStarRating(containerSelector = '.rate-stars', starSelector = '.star', activeClass = 'active') {
+  const containers = document.querySelectorAll(containerSelector);
+  if (!containers.length) return;
+
+  containers.forEach(container => {
+    const stars = Array.from(container.querySelectorAll(starSelector));
+    if (!stars.length) return;
+
+    const defaultActiveCount = container.querySelectorAll(`.${activeClass}`).length;
+    container.dataset.rating = defaultActiveCount || 0;
+
+    stars.forEach((star, index) => {
+      if (star.dataset._ratingBound === "true") return;
+      star.dataset._ratingBound = "true";
+
+      star.style.cursor = 'pointer';
+
+      star.addEventListener('click', () => {
+        const currentRating = index + 1;
+        container.dataset.rating = currentRating;
+
+        stars.forEach((s, i) => {
+          if (i < currentRating) {
+            s.classList.add(activeClass);
+          } else {
+            s.classList.remove(activeClass);
+          }
+        });
+      });
+    });
+  });
+}
+
 // Chạy hàm khi trang web tải xong
 document.addEventListener("DOMContentLoaded", () => {
     initUniversalActiveMenu('.menu-container__item', 'active'); 
