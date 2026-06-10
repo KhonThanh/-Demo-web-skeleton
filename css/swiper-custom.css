@@ -1,0 +1,190 @@
+/* ==========================================================================
+   1. NÚT ĐIỀU HƯỚNG (NAVIGATION: NEXT/PREV) - Áp dụng chung
+   ========================================================================== */
+.js-slider-wrapper {
+    position: relative; /* Bắt buộc để căn tọa độ cho nút/dots */
+}
+
+/* Base style cho tất cả nút Next/Prev */
+.custom-prev-btn,
+.custom-next-btn,
+.swiper-button-next,
+.swiper-button-prev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 32px !important; /* To hơn chút bấm cho sướng */
+    height: 32px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white-color) !important;
+    border-radius: 50%;
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    margin-top: 0 !important; /* Xóa margin mặc định của Swiper */
+}
+
+/* Icon bên trong nút */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 14px !important;
+    color: var(--primary-color);
+    transition: all 0.25s ease;
+}
+
+/* Hiệu ứng Hover chung */
+.custom-prev-btn:hover,
+.custom-next-btn:hover,
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background-color: var(--primary-color) !important;
+}
+
+.custom-prev-btn:hover::after,
+.custom-next-btn:hover::after,
+.swiper-button-next:hover::after,
+.swiper-button-prev:hover::after {
+    color: var(--white-color);
+}
+
+/* Vị trí mặc định (Nằm lòi ra ngoài slider 1 chút) */
+/* ==========================================================================
+   VỊ TRÍ NÚT ĐIỀU HƯỚNG (THÍCH ỨNG THEO MÀN HÌNH)
+   ========================================================================== */
+
+/* 1. Màn hình to (> 1550px): Nút nằm lòi ra ngoài slider 38px */
+.custom-prev-btn, 
+.swiper-button-prev { 
+    left: -38px; 
+}
+.custom-next-btn, 
+.swiper-button-next { 
+    right: -38px; 
+}
+
+/* 2. Màn hình vừa (< 1550px): Đẩy nút thụt vào trong 10px để không bị lẹm viền */
+@media screen and (max-width: 1550px) {
+    .custom-prev-btn, 
+    .swiper-button-prev { 
+        left: 10px; 
+    }
+    .custom-next-btn, 
+    .swiper-button-next { 
+        right: 10px; 
+    }
+}
+
+/* 3. Màn hình Mobile (< 768px): Ẩn luôn nút để khách tự vuốt tay */
+@media (max-width: 768px) {
+    .custom-prev-btn,
+    .custom-next-btn,
+    .swiper-button-prev,
+    .swiper-button-next {
+        display: none !important;
+    }
+}
+
+/* --- BIẾN THỂ RIÊNG CHO BANNER --- */
+/* Dù màn hình to hay nhỏ, nút banner luôn nằm lọt lòng và trong suốt */
+.js-slider-banner .swiper-button-prev { 
+    left: 20px; 
+    background-color: rgba(255,255,255,0.8) !important; 
+    border: none; 
+}
+.js-slider-banner .swiper-button-next { 
+    right: 20px; 
+    background-color: rgba(255,255,255,0.8) !important; 
+    border: none;
+}
+
+
+/* --- BIẾN THỂ CHO BANNER --- */
+/* Banner nút thụt vào trong và nền mờ mờ cho sang */
+.js-slider-banner .swiper-button-prev { left: 20px; background-color: rgba(255,255,255,0.8) !important; border: none; }
+.js-slider-banner .swiper-button-next { right: 20px; background-color: rgba(255,255,255,0.8) !important; border: none;}
+
+
+/* ==========================================================================
+   2. DẤU CHẤM TRANG (PAGINATION / DOTS) - Áp dụng chung
+   ========================================================================== */
+
+/* Trừa khoảng trống bên dưới để chứa Dots (Trừ banner) */
+.js-slider-3cols,
+.js-slider-4cols,
+.js-slider-logo{
+    padding-bottom: 20px !important; 
+}
+
+/* Căn giữa cụm Dots */
+.custom-dots,
+.swiper-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    position: absolute !important;
+    bottom: 0px !important; 
+    top: auto !important;
+    z-index: 10;
+    top: 100%;
+}
+
+/* Hình dáng từng hạt Dot mặc định */
+.custom-dots .swiper-pagination-bullet,
+.swiper-pagination .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background-color: var(--deactive-color, #ccc); /* Màu khi chưa active */
+    border-radius: 50%;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin: 0 !important; /* Bỏ margin mặc định của Swiper vì đã xài gap */
+}
+
+/* Dot khi được Active (Dài ra như viên thuốc) */
+.custom-dots .swiper-pagination-bullet-active,
+.swiper-pagination .swiper-pagination-bullet-active {
+    width: 28px;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    opacity: 1;
+}
+
+/* --- BIẾN THỂ CHO BANNER --- */
+/* Banner thì dots nằm lọt lòng bên trong ảnh, màu trắng */
+.js-slider-banner .swiper-pagination {
+    bottom: 20px !important;
+}
+.js-slider-banner .swiper-pagination-bullet {
+    background-color: var(--white-color);
+    opacity: 0.5;
+}
+.js-slider-banner .swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   4. TỰ ĐỘNG ẨN KHI KHÔNG CẦN TRƯỢT (SWIPER LOCK)
+   ========================================================================== */
+/* Khi số lượng slide ít hơn hoặc bằng số khung hiển thị -> Swiper tự thêm class lock này */
+.swiper-button-lock,
+.swiper-pagination-lock {
+    display: none !important;
+}
+
+/* ==========================================================================
+   3. RESPONSIVE ĐẶC BIỆT
+   ========================================================================== */
+/* Ẩn nút Next/Prev trên Mobile (để vuốt tay cho sướng) */
+@media (max-width: 768px) {
+    .custom-prev-btn,
+    .custom-next-btn {
+        display: none !important;
+    }
+}

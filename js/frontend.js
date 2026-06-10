@@ -366,32 +366,25 @@ function renderDynamicList(headingData, targetSelector) {
 // 🧩 2️⃣ Hàm dùng chung cho tất cả Swiper
 function initSwiperSlider({
   mainSelector,
-  wrapperSelector = null, // MỚI: Thêm cái này để khoanh vùng nút bấm
+  wrapperSelector = null, // Thêm tham số này để khoanh vùng
   minSlides = 0,
   autoplay = false,
   spaceBetween = 0,
   slidesPerView = 1,
   loop = false,
-  navigation = {
-    nextEl: null,
-    prevEl: null
-  },
-  pagination = {
-    el: null,
-    clickable: true
-  },
+  navigation = { nextEl: null, prevEl: null },
+  pagination = { el: null, clickable: true },
   breakpoints = null,
   ...extraOptions
 }) {
-  // 1. Dùng querySelectorAll để gom TẤT CẢ các slider có class này
+  // 1. Tìm tất cả các khối có chung class
   const swiperContainers = document.querySelectorAll(mainSelector);
-
   if (swiperContainers.length === 0) return;
 
-  // 2. Lặp qua từng cục Slider để xử lý độc lập
+  // 2. Lặp qua từng khối để set up ĐỘC LẬP
   swiperContainers.forEach(swiperContainer => {
 
-    // --- Tính năng Hack Loop của bồ (Giữ nguyên nhưng áp dụng cho TỪNG slider) ---
+    // --- Tính năng Hack Loop của bồ ---
     if (loop && minSlides > 0) {
       const wrapper = swiperContainer.querySelector('.swiper-wrapper');
       if (wrapper) {
@@ -399,6 +392,7 @@ function initSwiperSlider({
         let currentSlideCount = slides.length;
         const requiredForLoop = slidesPerView > 1 ? slidesPerView * 2 : 3;
         const actualMin = Math.max(minSlides, requiredForLoop);
+
         if (currentSlideCount > 0 && currentSlideCount < actualMin) {
           const multiplier = Math.ceil(actualMin / currentSlideCount) - 1;
           for (let i = 0; i < multiplier; i++) {
@@ -410,19 +404,20 @@ function initSwiperSlider({
       }
     }
 
-    // --- MỚI: KHOANH VÙNG NÚT NEXT/PREV & PAGINATION ---
-    // Tìm thẻ bọc ngoài cùng của cụm slider này. Nếu không truyền wrapperSelector thì lấy thẻ cha trực tiếp.
+    // --- TÍNH NĂNG KHOANH VÙNG NÚT BẤM (CHỐNG LỖI) ---
+    // Tìm cái thẻ bọc ngoài cùng của riêng thằng slider này
     const scopeElement = wrapperSelector ? swiperContainer.closest(wrapperSelector) : swiperContainer.parentElement;
 
+    // Ép nó chỉ tìm nút Next/Prev NẰM TRONG scopeElement này
     let scopedNav = false;
     if (navigation && (navigation.nextEl || navigation.prevEl)) {
-      // Ép Swiper tìm đúng cái nút bấm nằm TRONG cục wrapper này thôi
       scopedNav = {
         nextEl: scopeElement ? scopeElement.querySelector(navigation.nextEl) : navigation.nextEl,
         prevEl: scopeElement ? scopeElement.querySelector(navigation.prevEl) : navigation.prevEl,
       };
     }
 
+    // Ép nó chỉ tìm Pagination NẰM TRONG scopeElement này
     let scopedPag = false;
     if (pagination && pagination.el) {
       scopedPag = {
@@ -431,7 +426,7 @@ function initSwiperSlider({
       };
     }
 
-    // 3. Khởi tạo Swiper
+    // 3. Gọi Swiper với các nút đã được "đóng dấu chủ quyền"
     const swiperOptions = {
       slidesPerView: slidesPerView,
       spaceBetween: spaceBetween,
@@ -441,8 +436,8 @@ function initSwiperSlider({
         disableOnInteraction: false,
         ...(typeof autoplay === 'object' ? autoplay : {})
       } : false,
-      navigation: scopedNav,   // Nhét cục nav đã khoanh vùng vào
-      pagination: scopedPag,   // Nhét cục pag đã khoanh vùng vào
+      navigation: scopedNav, // Dùng nút đã khoanh vùng
+      pagination: scopedPag, // Dùng dot đã khoanh vùng
       breakpoints: breakpoints,
       ...extraOptions
     };
@@ -651,60 +646,127 @@ document.addEventListener("DOMContentLoaded", () => {
   includeHTML(() => {
     // 🟢 Slide banner chính (chuyển sang Swiper)
     initSwiperSlider({
-      mainSelector: '.slide-container',
-      minSlides: 3, // Đảm bảo có ít nhất 3 slide để loop mượt mà
-      autoplay: { delay: 3000, disableOnInteraction: false }, // Tự động chạy sau 3 giây
-      loop: true, // Bật vòng lặp vô hạn
-      slidesPerView: 1, // Hiển thị 1 slide
-      spaceBetween: 0, // Không có khoảng cách
+      mainSelector: '.js-slider-banner', // Tên class dùng chung
+      wrapperSelector: '.js-slider-wrapper', // BẮT BUỘC có thẻ bọc ngoài chung class này
+      minSlides: 3,
+      slidesPerView: 1,
+      spaceBetween: 0,
+      loop: true,
+      autoplay: { delay: 3000, disableOnInteraction: false },
+      navigation: {
+        nextEl: '.swiper-button-next', // Tự động tìm nút trong wrapper
+        prevEl: '.swiper-button-prev',
+      },
       pagination: {
-        el: '.swiper-pagination.custom-dots', // Selector cho dots
+        el: '.swiper-pagination',
         clickable: true,
       },
     });
 
+    // 2. SLIDER 3 CỘT (Dùng cho Dự án, Bình luận, Dịch vụ...)
     initSwiperSlider({
-      mainSelector: '.service-list',
-      minSlides: 8,
-      autoplay: { delay: 4000, disableOnInteraction: false },
+      mainSelector: '.js-slider-3cols',
+      wrapperSelector: '.js-slider-wrapper',
+      minSlides: 6,
       loop: true,
-      slidesPerView: 1, // Mặc định cho mobile
-      spaceBetween: 20,
+      autoplay: { delay: 3000, disableOnInteraction: false },
       navigation: {
-        nextEl: '.service-list .swiper-button-next',
-        prevEl: '.service-list .swiper-button-prev',
+        nextEl: '.swiper-button-next', // Tự động tìm nút trong wrapper
+        prevEl: '.swiper-button-prev',
       },
-      pagination: {
-        el: '.service-list .swiper-pagination',
-        clickable: true,
-      },
+      pagination: { el: '.custom-dots', clickable: true },
       breakpoints: {
-        500: { slidesPerView: 2, spaceBetween: 20 },
-        768: { slidesPerView: 3, spaceBetween: 20 },
-        1200: { slidesPerView: 4, spaceBetween: 20 },
-      },
+        320: { slidesPerView: 1, spaceBetween: 10 },
+        768: { slidesPerView: 2, spaceBetween: 15 },
+        1024: { slidesPerView: 3, spaceBetween: 20 }
+      }
     });
 
+    // 3. SLIDER 4 CỘT (Dùng cho Tin tức, Sản phẩm...)
     initSwiperSlider({
-      mainSelector: '.news-list',
-      minSlides: 8,
-      autoplay: { delay: 4000, disableOnInteraction: false },
+      mainSelector: '.js-slider-4cols',
+      wrapperSelector: '.js-slider-wrapper',
+      minSlides: 6,
       loop: true,
-      slidesPerView: 1, // Mặc định cho mobile
-      spaceBetween: 20,
+      autoplay: { delay: 3000, disableOnInteraction: false },
       navigation: {
-        nextEl: '.news-list .swiper-button-next',
-        prevEl: '.news-list .swiper-button-prev',
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
       },
       pagination: {
-        el: '.news-list .swiper-pagination',
-        clickable: true,
+        el: '.swiper-pagination', // ĐÃ SỬA CHUẨN
+        clickable: true
       },
       breakpoints: {
-        500: { slidesPerView: 2, spaceBetween: 20 },
-        768: { slidesPerView: 3, spaceBetween: 20 },
-        1200: { slidesPerView: 3, spaceBetween: 20 },
+        320: { slidesPerView: 2, spaceBetween: 10 },
+        768: { slidesPerView: 3, spaceBetween: 15 },
+        1024: { slidesPerView: 4, spaceBetween: 20 }
+      }
+    });
+
+    // 4. SLIDER LOGO / THƯƠNG HIỆU (Dạng lưới Grid chia hàng)
+    initSwiperSlider({
+      mainSelector: '.js-slider-logo',
+      wrapperSelector: '.js-slider-wrapper',
+      minSlides: 18,
+      loop: true,
+      autoplay: { delay: 3000, disableOnInteraction: false },
+      navigation: {
+        nextEl: '.swiper-button-next', // Tự động tìm nút trong wrapper
+        prevEl: '.swiper-button-prev',
       },
+      pagination: { el: '.swiper-pagination', clickable: true },
+      breakpoints: {
+        500: {
+          slidesPerView: 2, spaceBetween: 20,
+          grid: { rows: 2, fill: 'row' }
+        },
+        900: {
+          slidesPerView: 4, spaceBetween: 20,
+          grid: { rows: 2, fill: 'row' }
+        },
+        1200: {
+          slidesPerView: 5, spaceBetween: 20,
+          grid: { rows: 3, fill: 'row' }
+        },
+      }
+    });
+
+    // 5. SLIDER lúc đầu là tỉnh khi xuống mobile thì thành slide
+
+    initSwiperSlider({
+      mainSelector: '.js-slider-grid-to-slide',
+      wrapperSelector: '.js-slider-wrapper',
+      minSlides: 6, // Tối thiểu 6 cái để lấp đầy 1 trang trên PC
+
+      // LƯU Ý TỬ HUYỆT: Swiper Grid KHÔNG hỗ trợ loop. Bắt buộc để false!
+      loop: false,
+      autoplay: false, // Dạng lưới nhiều món thì nên để khách tự bấm, đừng tự nhảy
+
+      navigation: { nextEl: '.custom-next-btn', prevEl: '.custom-prev-btn' },
+      pagination: { el: '.custom-dots', clickable: true },
+
+      // Thuật toán chuyển đổi thần thánh
+      breakpoints: {
+        320: {
+          slidesPerView: 2, // Mobile: Trượt ngang 2 sản phẩm
+          spaceBetween: 10,
+          grid: { rows: 1, fill: 'row' } // Trả về 1 hàng ngang
+        },
+        768: {
+          slidesPerView: 3, // Tablet: Trượt ngang 3 sản phẩm
+          spaceBetween: 15,
+          grid: { rows: 1, fill: 'row' } // Trả về 1 hàng ngang
+        },
+        1024: {
+          slidesPerView: 3, // PC: Chia 3 cột
+          spaceBetween: 20,
+          grid: {
+            rows: 2, // KẾT HỢP VỚI 3 CỘT = LƯỚI 6 SẢN PHẨM / TRANG
+            fill: 'row' // Ưu tiên xếp từ trái sang phải, rồi mới rớt dòng
+          }
+        }
+      }
     });
 
     initToggleSystem([
