@@ -366,63 +366,89 @@ function renderDynamicList(headingData, targetSelector) {
 // 🧩 2️⃣ Hàm dùng chung cho tất cả Swiper
 function initSwiperSlider({
   mainSelector,
-  minSlides = 0, // Số lượng slide tối thiểu cần có để loop mượt mà (nếu loop: true)
-  autoplay = false, // false, true, hoặc object { delay: 2500, disableOnInteraction: false }
-  spaceBetween = 0, // Khoảng cách giữa các slide
-  slidesPerView = 1, // Số lượng slide hiển thị trên mỗi view
-  loop = false, // Bật/tắt chế độ lặp vô hạn
-  navigation = { // Cấu hình nút điều hướng
-    nextEl: null, // Selector của nút next
-    prevEl: null  // Selector của nút prev
+  wrapperSelector = null, // MỚI: Thêm cái này để khoanh vùng nút bấm
+  minSlides = 0,
+  autoplay = false,
+  spaceBetween = 0,
+  slidesPerView = 1,
+  loop = false,
+  navigation = {
+    nextEl: null,
+    prevEl: null
   },
-  pagination = { // Cấu hình phân trang (dots)
-    el: null,     // Selector của container chứa dots
-    clickable: true // Cho phép click vào dots để chuyển slide
+  pagination = {
+    el: null,
+    clickable: true
   },
-  breakpoints = null, // Cấu hình responsive
-  ...extraOptions // Các tùy chọn Swiper khác
+  breakpoints = null,
+  ...extraOptions
 }) {
-  const swiperContainer = document.querySelector(mainSelector);
-  if (!swiperContainer) {
-    console.warn(`Swiper container not found for selector: ${mainSelector}`);
-    return;
-  }
+  // 1. Dùng querySelectorAll để gom TẤT CẢ các slider có class này
+  const swiperContainers = document.querySelectorAll(mainSelector);
 
-  // Nếu loop được bật và minSlides được chỉ định, đảm bảo đủ slide để vòng lặp mượt mà
-  if (loop && minSlides > 0) {
-    const wrapper = swiperContainer.querySelector('.swiper-wrapper');
-    if (wrapper) {
-      const slides = Array.from(wrapper.children);
-      let currentSlideCount = slides.length;
-      // Swiper cần ít nhất slidesPerView * 2 (hoặc hơn) để loop mượt mà khi slidesPerView > 1
-      // Nếu slidesPerView = 1, cần ít nhất 2-3 slide
-      const requiredForLoop = slidesPerView > 1 ? slidesPerView * 2 : 3;
-      const actualMin = Math.max(minSlides, requiredForLoop);
+  if (swiperContainers.length === 0) return;
 
-      if (currentSlideCount < actualMin) {
-        for (let i = 0; i < actualMin - currentSlideCount; i++) {
-          wrapper.appendChild(slides[i % currentSlideCount].cloneNode(true));
+  // 2. Lặp qua từng cục Slider để xử lý độc lập
+  swiperContainers.forEach(swiperContainer => {
+
+    // --- Tính năng Hack Loop của bồ (Giữ nguyên nhưng áp dụng cho TỪNG slider) ---
+    if (loop && minSlides > 0) {
+      const wrapper = swiperContainer.querySelector('.swiper-wrapper');
+      if (wrapper) {
+        const slides = Array.from(wrapper.children);
+        let currentSlideCount = slides.length;
+        const requiredForLoop = slidesPerView > 1 ? slidesPerView * 2 : 3;
+        const actualMin = Math.max(minSlides, requiredForLoop);
+        if (currentSlideCount > 0 && currentSlideCount < actualMin) {
+          const multiplier = Math.ceil(actualMin / currentSlideCount) - 1;
+          for (let i = 0; i < multiplier; i++) {
+            slides.forEach(slide => {
+              wrapper.appendChild(slide.cloneNode(true));
+            });
+          }
         }
       }
     }
-  }
 
-  const swiperOptions = {
-    slidesPerView: slidesPerView,
-    spaceBetween: spaceBetween,
-    loop: loop,
-    autoplay: autoplay ? {
-      delay: typeof autoplay === 'number' ? autoplay : 2500,
-      disableOnInteraction: false,
-      ...(typeof autoplay === 'object' ? autoplay : {})
-    } : false,
-    navigation: navigation.nextEl || navigation.prevEl ? navigation : false,
-    pagination: pagination.el ? pagination : false,
-    breakpoints: breakpoints,
-    ...extraOptions
-  };
+    // --- MỚI: KHOANH VÙNG NÚT NEXT/PREV & PAGINATION ---
+    // Tìm thẻ bọc ngoài cùng của cụm slider này. Nếu không truyền wrapperSelector thì lấy thẻ cha trực tiếp.
+    const scopeElement = wrapperSelector ? swiperContainer.closest(wrapperSelector) : swiperContainer.parentElement;
 
-  new Swiper(swiperContainer, swiperOptions);
+    let scopedNav = false;
+    if (navigation && (navigation.nextEl || navigation.prevEl)) {
+      // Ép Swiper tìm đúng cái nút bấm nằm TRONG cục wrapper này thôi
+      scopedNav = {
+        nextEl: scopeElement ? scopeElement.querySelector(navigation.nextEl) : navigation.nextEl,
+        prevEl: scopeElement ? scopeElement.querySelector(navigation.prevEl) : navigation.prevEl,
+      };
+    }
+
+    let scopedPag = false;
+    if (pagination && pagination.el) {
+      scopedPag = {
+        ...pagination,
+        el: scopeElement ? scopeElement.querySelector(pagination.el) : pagination.el,
+      };
+    }
+
+    // 3. Khởi tạo Swiper
+    const swiperOptions = {
+      slidesPerView: slidesPerView,
+      spaceBetween: spaceBetween,
+      loop: loop,
+      autoplay: autoplay ? {
+        delay: typeof autoplay === 'number' ? autoplay : 2500,
+        disableOnInteraction: false,
+        ...(typeof autoplay === 'object' ? autoplay : {})
+      } : false,
+      navigation: scopedNav,   // Nhét cục nav đã khoanh vùng vào
+      pagination: scopedPag,   // Nhét cục pag đã khoanh vùng vào
+      breakpoints: breakpoints,
+      ...extraOptions
+    };
+
+    new Swiper(swiperContainer, swiperOptions);
+  });
 }
 
 // js roll to top
@@ -452,48 +478,64 @@ function validateField(input) {
   const error = group?.querySelector(".error-msg");
   let message = "";
 
-  const value = input.value.trim();
-
-  if (input.hasAttribute("required") && !value) {
-    message = input.dataset.msg || "Vui lòng không để trống";
+  // 1. Nếu là Radio Button (Cùng name)
+  if (input.type === "radio") {
+    const radioGroup = document.querySelectorAll(`input[name="${input.name}"]`);
+    const isChecked = Array.from(radioGroup).some(radio => radio.checked);
+    if (input.hasAttribute("required") && !isChecked) {
+      message = input.dataset.msg || "Vui lòng chọn một tùy chọn";
+    }
+    // Gỡ lỗi cho toàn bộ group radio
+    radioGroup.forEach(radio => {
+      const rGroup = radio.closest(".form-group");
+      if (rGroup) rGroup.classList.toggle("error", !!message);
+    });
   }
-
-  if (!message && input.type === "email" && value) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(value)) message = "Email không hợp lệ";
+  // 2. Nếu là Checkbox
+  else if (input.type === "checkbox") {
+    if (input.hasAttribute("required") && !input.checked) {
+      message = input.dataset.msg || "Vui lòng xác nhận để tiếp tục";
+    }
   }
+  else {
+    const value = input.value.trim();
 
-  if (!message && input.hasAttribute("minlength")) {
-    const min = +input.getAttribute("minlength");
-    if (value.length < min) {
-      message = input.dataset.msg || `Tối thiểu ${min} ký tự`;
+    if (input.hasAttribute("required") && !value) {
+      message = input.dataset.msg || "Trường này không được để trống";
+    }
+
+    if (!message && input.type === "email" && value) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(value)) message = input.dataset.msg || "Email chưa đúng định dạng";
+    }
+
+    if (!message && input.hasAttribute("minlength") && value) {
+      const min = +input.getAttribute("minlength");
+      if (value.length < min) {
+        message = input.dataset.msg || `Vui lòng nhập tối thiểu ${min} ký tự`;
+      }
+    }
+    if (!message && input.pattern && value) {
+      const regex = new RegExp(input.pattern);
+      if (!regex.test(value)) {
+        message = input.dataset.msg || "Thông tin nhập chưa hợp lệ";
+      }
     }
   }
 
-  if (!message && input.tagName === "SELECT" && input.required) {
-    if (!input.value) message = "Vui lòng chọn một giá trị";
+  if (group && input.type !== "radio") {
+    group.classList.toggle("error", !!message);
   }
-
-  if (!message && input.type === "checkbox" && input.required) {
-    if (!input.checked) message = "Vui lòng xác nhận";
+  if (error) {
+    error.textContent = message;
   }
-
-  if (!message && input.pattern && input.value) {
-    const regex = new RegExp(input.pattern);
-    if (!regex.test(input.value)) {
-      message = input.dataset.msg || "Giá trị không hợp lệ";
-    }
-  }
-
-  if (group) group.classList.toggle("error", !!message);
-  if (error) error.textContent = message;
 
   return !message;
 }
 
 function validateForm(form) {
   let isValid = true;
-  form.querySelectorAll("input, textarea").forEach(input => {
+  form.querySelectorAll(".form-control, input[type='checkbox'], input[type='radio']").forEach(input => {
     if (!validateField(input)) isValid = false;
   });
   return isValid;
@@ -504,57 +546,64 @@ function initFormValidation(root = document) {
     if (form.dataset._validated) return;
     form.dataset._validated = "true";
 
-    form.querySelectorAll("input, textarea").forEach(input => {
+    form.querySelectorAll(".form-control, input[type='checkbox'], input[type='radio']").forEach(input => {
       input.addEventListener("input", () => validateField(input));
+      input.addEventListener("blur", () => validateField(input));
     });
-
     form.addEventListener("submit", e => {
-      if (!validateForm(form)) e.preventDefault();
+      if (!validateForm(form)) {
+        e.preventDefault();
+        const firstError = form.querySelector(".form-group.error");
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
     });
   });
 }
 
+
 // js add active vào menu để xác định vị trí đang ở đâu
 function initUniversalActiveMenu(menuSelector = '', activeClassName = 'active') {
-    const currentUrl = window.location.href.split(/[?#]/)[0];
+  const currentUrl = window.location.href.split(/[?#]/)[0];
 
-    const menuLinks = document.querySelectorAll(`${menuSelector} a`);
-    let bestMatch = null;
-    let longestMatchLength = 0;
+  const menuLinks = document.querySelectorAll(`${menuSelector} a`);
+  let bestMatch = null;
+  let longestMatchLength = 0;
 
-    menuLinks.forEach(link => {
-        const hrefAttr = link.getAttribute('href');
-        if (!hrefAttr || hrefAttr.startsWith('#') || hrefAttr.startsWith('javascript')) return;
-        const linkUrl = link.href.split(/[?#]/)[0];
-        if (currentUrl === linkUrl) {
-            bestMatch = link;
-            longestMatchLength = linkUrl.length;
-        } 
-        else if (currentUrl.startsWith(linkUrl)) {
-            const isHomePage = linkUrl.endsWith('/') || linkUrl.endsWith('index.html') || linkUrl.endsWith('/en') || linkUrl.endsWith('/kn');
-            
-            if (!isHomePage && linkUrl.length > longestMatchLength) {
-                bestMatch = link;
-                longestMatchLength = linkUrl.length;
-            }
-        }
-    });
-    if (bestMatch) {
-        bestMatch.classList.add(activeClassName);
-        const parentMenu = bestMatch.closest(menuSelector);
-        if (parentMenu) parentMenu.classList.add(activeClassName);
-    } else {
-        const homeLink = Array.from(menuLinks).find(link => {
-            const lUrl = link.href.split(/[?#]/)[0];
-            return lUrl.endsWith('/') || lUrl.endsWith('index.html') || lUrl.endsWith('/en') || lUrl.endsWith('/kn');
-        });
-        
-        if (homeLink) {
-            homeLink.classList.add(activeClassName);
-            const parentMenu = homeLink.closest(menuSelector);
-            if (parentMenu) parentMenu.classList.add(activeClassName);
-        }
+  menuLinks.forEach(link => {
+    const hrefAttr = link.getAttribute('href');
+    if (!hrefAttr || hrefAttr.startsWith('#') || hrefAttr.startsWith('javascript')) return;
+    const linkUrl = link.href.split(/[?#]/)[0];
+    if (currentUrl === linkUrl) {
+      bestMatch = link;
+      longestMatchLength = linkUrl.length;
     }
+    else if (currentUrl.startsWith(linkUrl)) {
+      const isHomePage = linkUrl.endsWith('/') || linkUrl.endsWith('index.html') || linkUrl.endsWith('/en') || linkUrl.endsWith('/kn');
+
+      if (!isHomePage && linkUrl.length > longestMatchLength) {
+        bestMatch = link;
+        longestMatchLength = linkUrl.length;
+      }
+    }
+  });
+  if (bestMatch) {
+    bestMatch.classList.add(activeClassName);
+    const parentMenu = bestMatch.closest(menuSelector);
+    if (parentMenu) parentMenu.classList.add(activeClassName);
+  } else {
+    const homeLink = Array.from(menuLinks).find(link => {
+      const lUrl = link.href.split(/[?#]/)[0];
+      return lUrl.endsWith('/') || lUrl.endsWith('index.html') || lUrl.endsWith('/en') || lUrl.endsWith('/kn');
+    });
+
+    if (homeLink) {
+      homeLink.classList.add(activeClassName);
+      const parentMenu = homeLink.closest(menuSelector);
+      if (parentMenu) parentMenu.classList.add(activeClassName);
+    }
+  }
 }
 
 // js rate star cmt
@@ -594,7 +643,7 @@ function initStarRating(containerSelector = '.rate-stars', starSelector = '.star
 
 // Chạy hàm khi trang web tải xong
 document.addEventListener("DOMContentLoaded", () => {
-    initUniversalActiveMenu('.menu-container__item', 'active'); 
+  initUniversalActiveMenu('.menu-container__item', 'active');
 });
 
 // ----------- Vùng gọi biến --------------
